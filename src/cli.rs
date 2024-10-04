@@ -49,23 +49,26 @@ pub fn run(args: Args) -> Result<()> {
     let _username = args.username;
     let _password = args.password;
 
-    let output = OutFile::new(args.out_file);
-    let mut data = Data::new(&url)?;
+    // let output = OutFile::new(args.out_file);
+    // let mut data = Data::new(&url)?;
 
-    match output.out_type {
-        OutType::Arrow => {
-            let filename = output.file_name.unwrap().to_string();
-            let mut file = File::create(filename).expect("could not create file");
-            IpcWriter::new(&mut file).finish(&mut data.df)?;
-        }
-        OutType::Csv => {
-            let filename = output.file_name.unwrap().to_string();
-            let mut file = File::create(filename).expect("could not create file");
-            CsvWriter::new(&mut file).finish(&mut data.df)?;
-        }
-        OutType::Stdout => {
-            println!("{:?}", data.df);
-        }
-    }
+    let lim_off = LimitOffset::new(&url);
+    println!("{:?}", lim_off);
+
+    // match output.out_type {
+    //     OutType::Arrow => {
+    //         let filename = output.file_name.unwrap().to_string();
+    //         let mut file = File::create(filename).expect("could not create file");
+    //         IpcWriter::new(&mut file).finish(&mut data.df)?;
+    //     }
+    //     OutType::Csv => {
+    //         let filename = output.file_name.unwrap().to_string();
+    //         let mut file = File::create(filename).expect("could not create file");
+    //         CsvWriter::new(&mut file).finish(&mut data.df)?;
+    //     }
+    //     OutType::Stdout => {
+    //         println!("{:?}", data.df);
+    //     }
+    // }
     Ok(())
 }

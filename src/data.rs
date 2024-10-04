@@ -32,6 +32,12 @@ pub struct Data {
     file_type: FileType,
 }
 
+#[derive(Debug)]
+pub struct LimitOffset {
+    limit: Option<i64>,
+    offset: Option<i64>,
+}
+
 impl Data {
     pub fn new(url: &str) -> Result<Self> {
         let url = Url::parse(url)?;
@@ -84,5 +90,22 @@ impl OutFile {
             out_type,
             file_name,
         }
+    }
+}
+
+impl LimitOffset {
+    pub fn new(url: &str) -> Self {
+        let url = Url::parse(url).unwrap();
+        // let limit = url
+        //     .query_pairs()
+        //     .find(|(key, _)| key == "limit")
+        //     .map(|(_, value)| value);
+        // let offset = url
+        //     .query_pairs()
+        //     .find(|(key, _)| key == "offset")
+        //     .map(|(_, value)| value);
+        // let limit = limit.map(|value| value.parse::<i64>().unwrap());
+        // let offset = offset.map(|value| value.parse::<i64>().unwrap());
+        Self { limit, offset }
     }
 }
